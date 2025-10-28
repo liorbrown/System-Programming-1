@@ -1,0 +1,19 @@
+1 - Description:
+Ask the user for two integers,
+calculate their: -sum, 
+                 -difference
+                 -product
+                 -quotient
+                 
+print the results. 
+(If division by zero occurs, print an error message instead of dividing.)
+
+2 - Description:
+Read three integers and print which one is the largest. 
+Handles equality cases as well.
+
+3 - Description:
+Ask the user for a year and check if it’s a leap year according to the Gregorian rule:
+Divisible by 4 -> leap
+Except if divisible by 100 -> not leap
+Except if divisible by 400 -> leap again

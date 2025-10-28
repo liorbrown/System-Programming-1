@@ -1,0 +1,4 @@
+- write code by yourself, understanding is not enough.
+  experiment by yourself, try every behavior. 
+
+- write small functions, this will make the code more readable
