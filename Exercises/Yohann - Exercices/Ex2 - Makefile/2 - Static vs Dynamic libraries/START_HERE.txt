@@ -1,0 +1,46 @@
+Static vs Dynamic Libraries - Quick Guide
+==========================================
+
+START HERE!
+-----------
+
+For simple, easy-to-understand examples:
+
+1. STATIC LIBRARY:
+   cd "1 - Static libraries"
+   make run
+
+2. DYNAMIC LIBRARY:
+   cd "2 - Dynamic libraries"
+   make run
+
+Each folder has its own README with detailed explanations.
+
+---
+
+Key Differences at a Glance:
+-----------------------------
+
+STATIC (.a files):
+  ✓ Library code INSIDE executable
+  ✓ Larger file size
+  ✓ No .a file needed at runtime
+  ✗ Must recompile to update library
+
+DYNAMIC (.so files):
+  ✓ Library code SEPARATE from executable
+  ✓ Smaller file size
+  ✓ Can update library independently
+  ✗ .so file MUST be present at runtime
+
+---
+
+Try This:
+---------
+
+1. Build both examples
+2. Compare file sizes
+3. Run "make test-dependency" in dynamic example
+4. See what happens when .so is missing!
+
+Happy learning!

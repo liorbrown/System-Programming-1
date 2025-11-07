@@ -1,0 +1,65 @@
+# Makefile for Static Library Example
+#
+# What is a static library?
+# - Archive of compiled object files (.a extension)
+# - Library code is COPIED into the final executable
+# - Created using 'ar' (archive) command
+# - Larger executable, but no runtime dependencies
+
+CC = gcc
+CFLAGS = -Wall -Wextra
+AR = ar
+ARFLAGS = rcu
+
+# Library name (must start with 'lib' and end with '.a')
+LIBRARY = libcalculator.a
+PROG = prog
+
+all: $(PROG)
+	@echo "\n✓ Static library program built successfully!"
+	@echo "Run with: ./$(PROG)"
+
+# Step 1: Compile source file to object file
+calculator.o: calculator.c calculator.h
+	@echo "Step 1: Compiling calculator.c to object file..."
+	$(CC) $(CFLAGS) -c calculator.c -o calculator.o
+
+# Step 2: Create static library from object file
+$(LIBRARY): calculator.o
+	@echo "Step 2: Creating static library $(LIBRARY)..."
+	$(AR) $(ARFLAGS) $(LIBRARY) calculator.o
+	@echo "  - Static library created!"
+
+# Step 3: Link main program with static library
+$(PROG): main.c $(LIBRARY)
+	@echo "Step 3: Linking main.c with static library..."
+	$(CC) $(CFLAGS) -o $(PROG) main.c -L. -lcalculator
+	@echo "  - Program linked with static library!"
+
+run: $(PROG)
+	@echo "\n========== Running Program =========="
+	./$(PROG)
+
+# Show library contents
+info: $(LIBRARY)
+	@echo "\n========== Library Information =========="
+	@echo "Object files in library:"
+	ar -t $(LIBRARY)
+	@echo "\nSymbols in library:"
+	nm $(LIBRARY) | grep -E "add|multiply"
+	@echo "\nFile size:"
+	ls -lh $(LIBRARY) $(PROG)
+
+clean:
+	rm -f *.o $(LIBRARY) $(PROG)
+	@echo "Cleaned all build files"
+
+help:
+	@echo "Available targets:"
+	@echo "  all   - Build static library and program"
+	@echo "  run   - Build and run the program"
+	@echo "  info  - Show library information"
+	@echo "  clean - Remove all build files"
+	@echo "  help  - Show this help"
+
+.PHONY: all run info clean help
