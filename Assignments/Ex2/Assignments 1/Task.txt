@@ -1,0 +1,60 @@
+ASSIGNMENT IDEAS FOR SYSTEM PROGRAMMING 1
+==========================================
+
+1. MODULAR CALCULATOR
+    - Create a calculator using multiple source files
+    - Implement operations (add, subtract, multiply, divide) in separate .c files
+    - Use header files for function declarations
+    - Build using a Makefile with separate compilation
+    - Use preprocessor directives for configuration (e.g., DEBUG mode)
+
+2. UNIT CONVERTER LIBRARY
+    - Build a static library for unit conversions
+    - Functions: celsius_to_fahrenheit, km_to_miles, kg_to_pounds, etc.
+    - Create a Makefile to build the library (.a file)
+    - Write a client program that links against the library
+    - Use #define for conversion constants
+
+3. TEXT STATISTICS ANALYZER
+    - Read characters from stdin one at a time
+    - Count: letters, digits, spaces, special characters
+    - Calculate percentages using only simple variables
+    - Use preprocessor macros for character classification
+    - Build with multi-target Makefile (debug/release)
+
+4. CONDITIONAL COMPILATION PROJECT
+    - Write a program with platform-specific code
+    - Use #ifdef to support LINUX, WINDOWS, MAC configurations
+    - Different output messages or behaviors per platform
+    - Makefile with targets for different builds
+    - Practice with -D compiler flags
+
+5. MATH LIBRARY WRAPPER
+    - Create wrapper functions around <math.h>
+    - Add error checking and logging
+    - Build as shared library (.so)
+    - Include guards in headers
+    - Makefile with automatic dependency generation
+
+6. BITWISE OPERATIONS TOOLKIT
+    - Library of bitwise manipulation functions
+    - set_bit, clear_bit, toggle_bit, check_bit
+    - print_binary, count_ones, reverse_bits
+    - Use only int/long variables (no arrays)
+    - Conditional compilation for 32/64 bit systems
+
+7. MULTI-FILE GAME (Number Guessing)
+    - Split into: input.c, logic.c, output.c, main.c
+    - Each module with its own header
+    - Use #define for game parameters (MAX_TRIES, RANGE)
+    - Makefile with clean, rebuild targets
+    - Practice linking multiple object files
+
+LEARNING OBJECTIVES:
+- Modular programming and code organization
+- Header files and include guards
+- Makefiles (compilation, linking, dependencies)
+- Static and shared libraries
+- Preprocessor directives (#define, #ifdef, #include)
+- Separate compilation
+- Project structure

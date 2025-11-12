@@ -1,0 +1,75 @@
+# Makefile for Dynamic Library Example
+#
+# What is a dynamic library?
+# - Shared library file (.so extension on Linux)
+# - Library code is LOADED at runtime (not copied into executable)
+# - Created with -fPIC (Position Independent Code) flag
+# - Smaller executable, but requires .so file to run
+
+CC = gcc
+CFLAGS = -Wall -Wextra
+
+# Library name (must start with 'lib' and end with '.so')
+LIBRARY = libcalculator.so
+PROG = prog
+
+all: $(PROG)
+	@echo "\n✓ Dynamic library program built successfully!"
+	@echo "Run with: ./$(PROG)"
+	@echo "Note: libcalculator.so must be present to run!"
+
+# Create dynamic/shared library with Position Independent Code
+$(LIBRARY): calculator.c calculator.h
+	@echo "Creating dynamic library $(LIBRARY)..."
+	@echo "  - Using -fPIC (Position Independent Code)"
+	@echo "  - Using -shared (create shared library)"
+	$(CC) $(CFLAGS) -fPIC -shared -o $(LIBRARY) calculator.c
+	@echo "  - Dynamic library created!"
+
+# Link main program with dynamic library
+$(PROG): main.c $(LIBRARY)
+	@echo "Linking main.c with dynamic library..."
+	@echo "  - Using -Wl,-rpath,. to set runtime library path"
+	$(CC) $(CFLAGS) -o $(PROG) main.c -L. -lcalculator -Wl,-rpath,.
+	@echo "  - Program linked with dynamic library!"
+
+run: $(PROG)
+	@echo "\n========== Running Program =========="
+	./$(PROG)
+
+# Show library information and dependencies
+info: $(PROG)
+	@echo "\n========== Library Information =========="
+	@echo "Symbols in library:"
+	nm -D $(LIBRARY) | grep -E "add|multiply"
+	@echo "\nProgram dependencies:"
+	ldd $(PROG)
+	@echo "\nFile sizes:"
+	ls -lh $(LIBRARY) $(PROG)
+
+# Demonstrate that .so is required at runtime
+test-dependency: $(PROG)
+	@echo "\n========== Testing Runtime Dependency =========="
+	@echo "Running with library present:"
+	./$(PROG)
+	@echo "\nNow hiding the library..."
+	@mv $(LIBRARY) $(LIBRARY).backup
+	@echo "Trying to run without library:"
+	@./$(PROG) 2>&1 || echo "❌ Failed! The program needs the .so file!"
+	@mv $(LIBRARY).backup $(LIBRARY)
+	@echo "\n✓ Library restored"
+
+clean:
+	rm -f $(LIBRARY) $(LIBRARY).backup $(PROG)
+	@echo "Cleaned all build files"
+
+help:
+	@echo "Available targets:"
+	@echo "  all             - Build dynamic library and program"
+	@echo "  run             - Build and run the program"
+	@echo "  info            - Show library information"
+	@echo "  test-dependency - Demonstrate runtime dependency"
+	@echo "  clean           - Remove all build files"
+	@echo "  help            - Show this help"
+
+.PHONY: all run info test-dependency clean help
